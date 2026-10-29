@@ -3,9 +3,9 @@
   <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <meta name="theme-color" content="#166534">  
-  <meta name="description" content="كتالوج منتجات وأسعار محل هوس البنات">  
-  <meta name="application-name" content="محل هوس البنات">  
-  <title>محل هوس البنات</title>    <link rel="manifest" href="./manifest.json">    <style>  
+  <meta name="description" content="متجر روديم ليبيا محل هوس البنات">  
+  <meta name="application-name" content="متجر ملابس ليبي">  
+  <title>متجر روديم</title>    <link rel="manifest" href="./manifest.json">    <style>  
     :root {  
       --green: #E91E63;  
       --green-dark: #FFFFFF;  
@@ -406,7 +406,7 @@
     }  
   </style>  </head>  <body>  
   <header>  
-    <h1>🌸 محل هوس البنات 🌸</h1>  
+    <h1> متجر روديم ليبيا </h1>  
     <p>كتالوج المنتجات والأسعار</p>  
   </header>    <main class="container">  
     <section id="loginPanel" class="panel">  
@@ -538,7 +538,7 @@
 </section>
 
   </main>    <footer>  
-    محل هوس البنات — أهلاً وسهلاً بكم 🌸  
+    متجر روديم ليبيا — أهلاً وسهلاً بكم   
   </footer>    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    <script>  
     // إعدادات Supabase  
     const SUPABASE_URL = "https://ktsimfcmmrvxtkshroef.supabase.co";  
@@ -882,11 +882,9 @@
         ". هل المنتج متاح؟";  
   
       const encodedMessage = encodeURIComponent(message);  
-      const mahmoudURL =  
-        "https://wa.me/201113382703?text=" + encodedMessage;  
-      const omJannahURL =  
-        "https://wa.me/201030284960?text=" + encodedMessage;  
-  
+      const rodimURL =  
+        "https://wa.me/201031927103?text=" + encodedMessage;  
+      
       detail.innerHTML = `  
         <div class="detail-image-wrap">${imageHTML}</div>  
         <h2>${escapeHTML(product.name || "تفاصيل المنتج")}</h2>  
@@ -911,14 +909,11 @@
         </div>  
         <h3 style="margin-top:18px">للطلب والاستفسار عبر واتساب</h3>  
         <div class="whatsapp-buttons">  
-          <a class="btn-whatsapp" href="${mahmoudURL}"  
+          <a class="btn-whatsapp" href="${rodimURL}"  
              target="_blank" rel="noopener noreferrer">  
-            ☎️ واتساب محمود  
+            ☎️ واتساب روديم  
           </a>  
-          <a class="btn-whatsapp" href="${omJannahURL}"  
-             target="_blank" rel="noopener noreferrer">  
-            ☎️ واتساب أم جنه  
-          </a>  
+         
         </div>  
       `;  
   
