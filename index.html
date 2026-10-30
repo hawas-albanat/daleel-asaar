@@ -2,10 +2,13 @@
 <head>  
   <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <meta name="theme-color" content="#166534">  
-  <meta name="description" content="متجر روديم ليبيا ليبيا RODIM">  
-  <meta name="application-name" content="متجر ملابس ليبي">  
-  <title>متجر روديم</title>    <link rel="manifest" href="./manifest.json">  <link rel="icon" href="./icon.svg">  <style>  
+  <meta name="theme-color" content="#E91E63">  
+  <meta name="description" content="متجر روديم ليبيا RODIM">  
+  <meta name="application-name" content="متجر روديم ليبيا">  
+  <title>متجر روديم</title>    
+  <link rel="manifest" href="/rodim-libya/manifest.json?v=5">  
+  <link rel="icon" href="/rodim-libya/rodim-icon-512-3.png">  
+  <style>  
     :root {  
       --green: #E91E63;  
       --green-dark: #FFFFFF;  
@@ -316,32 +319,32 @@
     }  
   
     .detail-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-.detail-thumbnails {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 8px 0;
-}
+    .detail-thumbnails {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 0;
+    }
 
-.detail-thumbnail {
-  width: 65px;
-  height: 65px;
-  flex: 0 0 65px;
-  object-fit: contain;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  background: white;
-}
+    .detail-thumbnail {
+      width: 65px;
+      height: 65px;
+      flex: 0 0 65px;
+      object-fit: contain;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      background: white;
+    }
 
-.detail-thumbnail.active {
-  border-color: var(--green);
-}  
+    .detail-thumbnail.active {
+      border-color: var(--green);
+    }  
   
     .detail-price {  
       color: var(--green);  
@@ -426,7 +429,9 @@
         padding: 5px;  
       }  
     }  
-  </style>  </head>  <body>  
+  </style>  
+</head>  
+<body>  
   <header>  
     <h1> متجر روديم ليبيا </h1>  
     <p>كتالوج المنتجات والأسعار</p>  
@@ -518,12 +523,12 @@
     </div>  
 
     <div class="field">
-  <label for="productImage">صور المنتج</label>
-  <input id="productImage" type="file" accept="image/*" multiple>
-  <small id="imageHelp">
-    يمكنك اختيار عدة صور للمنتج مرة واحدة.
-  </small>
-</div>
+      <label for="productImage">صور المنتج</label>
+      <input id="productImage" type="file" accept="image/*" multiple>
+      <small id="imageHelp">
+        يمكنك اختيار عدة صور للمنتج مرة واحدة.
+      </small>
+    </div>
 
     <button id="saveProductBtn" class="btn" type="submit">  
       حفظ المنتج  
@@ -809,24 +814,24 @@
         imageWrap.className = "product-image-wrap";  
   
         const productImage = product.images?.length
-  ? product.images[0]
-  : product.image_url;
+          ? product.images[0]
+          : product.image_url;
 
-if (productImage) {
-  const image = document.createElement("img");
-  image.className = "product-image";
-  image.src = productImage;
-  image.alt = product.name || "صورة المنتج";
-  image.loading = "lazy";
+        if (productImage) {
+          const image = document.createElement("img");
+          image.className = "product-image";
+          image.src = productImage;
+          image.alt = product.name || "صورة المنتج";
+          image.loading = "lazy";
 
-  image.onerror = () => {
-    imageWrap.textContent = "تعذر تحميل الصورة";
-  };
+          image.onerror = () => {
+            imageWrap.textContent = "تعذر تحميل الصورة";
+          };
 
-  imageWrap.appendChild(image);
-} else {
-  imageWrap.textContent = "لا توجد صورة";
-}
+          imageWrap.appendChild(image);
+        } else {
+          imageWrap.textContent = "لا توجد صورة";
+        }
   
         const info = document.createElement("div");  
         info.className = "product-info";  
@@ -898,124 +903,124 @@ if (productImage) {
     }  
   
     function renderProductDetail(product) {
-  const detail = $("detailContent");
+      const detail = $("detailContent");
 
-  const detailImages = product.images?.length
-    ? product.images
-    : (product.image_url ? [product.image_url] : []);
+      const detailImages = product.images?.length
+        ? product.images
+        : (product.image_url ? [product.image_url] : []);
 
-  const message =
-    "السلام عليكم، أنا مهتم/ة بمنتج: " +
-    (product.name || "") +
-    "، والسعر: " + formatPrice(product.price) +
-    ". هل المنتج متاح؟";
+      const message =
+        "السلام عليكم، أنا مهتم/ة بمنتج: " +
+        (product.name || "") +
+        "، والسعر: " + formatPrice(product.price) +
+        ". هل المنتج متاح؟";
 
-  const encodedMessage = encodeURIComponent(message);
-  const rodimURL =
-    "https://wa.me/201031927103?text=" + encodedMessage;
+      const encodedMessage = encodeURIComponent(message);
+      const rodimURL =
+        "https://wa.me/201031927103?text=" + encodedMessage;
 
-  detail.innerHTML = `
-    <div class="detail-image-wrap" id="detailImageWrap"></div>
-    <div class="detail-thumbnails" id="detailThumbnails"></div>
+      detail.innerHTML = `
+        <div class="detail-image-wrap" id="detailImageWrap"></div>
+        <div class="detail-thumbnails" id="detailThumbnails"></div>
 
-    <h2>${escapeHTML(product.name || "تفاصيل المنتج")}</h2>
+        <h2>${escapeHTML(product.name || "تفاصيل المنتج")}</h2>
 
-    <div class="detail-price">
-      ${escapeHTML(formatPrice(product.price))}
-    </div>
+        <div class="detail-price">
+          ${escapeHTML(formatPrice(product.price))}
+        </div>
 
-    <div class="detail-meta">
-      <strong>القسم:</strong>
-      ${escapeHTML(categoryName(product.category_id))}
-    </div>
+        <div class="detail-meta">
+          <strong>القسم:</strong>
+          ${escapeHTML(categoryName(product.category_id))}
+        </div>
 
-    <div class="detail-meta">
-      <strong>الوصف:</strong>
-      <div class="detail-description">${
-        escapeHTML(product.description || "لا يوجد وصف مضاف.")
-      }</div>
-    </div>
+        <div class="detail-meta">
+          <strong>الوصف:</strong>
+          <div class="detail-description">${
+            escapeHTML(product.description || "لا يوجد وصف مضاف.")
+          }</div>
+        </div>
 
-    <div class="detail-meta">
-      <strong>الألوان المتاحة:</strong>
-      ${escapeHTML(product.colors || "يرجى الاستفسار عن الألوان")}
-    </div>
+        <div class="detail-meta">
+          <strong>الألوان المتاحة:</strong>
+          ${escapeHTML(product.colors || "يرجى الاستفسار عن الألوان")}
+        </div>
 
-    <div class="detail-meta">
-      <strong>المقاسات المتاحة:</strong>
-      ${escapeHTML(product.sizes || "يرجى الاستفسار عن المقاسات")}
-    </div>
+        <div class="detail-meta">
+          <strong>المقاسات المتاحة:</strong>
+          ${escapeHTML(product.sizes || "يرجى الاستفسار عن المقاسات")}
+        </div>
 
-    <h3 style="margin-top:18px">
-      للطلب والاستفسار عبر واتساب
-    </h3>
+        <h3 style="margin-top:18px">
+          للطلب والاستفسار عبر واتساب
+        </h3>
 
-    <div class="whatsapp-buttons">
-      <a class="btn-whatsapp" href="${rodimURL}"
-         target="_blank" rel="noopener noreferrer">
-        ☎️ واتساب روديم
-      </a>
-    </div>
-  `;
+        <div class="whatsapp-buttons">
+          <a class="btn-whatsapp" href="${rodimURL}"
+             target="_blank" rel="noopener noreferrer">
+            ☎️ واتساب روديم
+          </a>
+        </div>
+      `;
 
-  const imageWrap = $("detailImageWrap");
-  const thumbnails = $("detailThumbnails");
+      const imageWrap = $("detailImageWrap");
+      const thumbnails = $("detailThumbnails");
 
-  if (detailImages.length > 0) {
-    const mainImage = document.createElement("img");
-    mainImage.className = "detail-image";
-    mainImage.src = detailImages[0];
-    mainImage.alt = product.name || "صورة المنتج";
-    imageWrap.appendChild(mainImage);
+      if (detailImages.length > 0) {
+        const mainImage = document.createElement("img");
+        mainImage.className = "detail-image";
+        mainImage.src = detailImages[0];
+        mainImage.alt = product.name || "صورة المنتج";
+        imageWrap.appendChild(mainImage);
 
-    detailImages.forEach((imageUrl, index) => {
-      const thumbnail = document.createElement("img");
-      thumbnail.className = "detail-thumbnail";
-      thumbnail.src = imageUrl;
-      thumbnail.alt = "صورة " + (index + 1);
-      thumbnail.loading = "lazy";
+        detailImages.forEach((imageUrl, index) => {
+          const thumbnail = document.createElement("img");
+          thumbnail.className = "detail-thumbnail";
+          thumbnail.src = imageUrl;
+          thumbnail.alt = "صورة " + (index + 1);
+          thumbnail.loading = "lazy";
 
-      if (index === 0) {
-        thumbnail.classList.add("active");
+          if (index === 0) {
+            thumbnail.classList.add("active");
+          }
+
+          thumbnail.addEventListener("click", () => {
+            mainImage.src = imageUrl;
+
+            thumbnails.querySelectorAll(".detail-thumbnail")
+              .forEach(item => item.classList.remove("active"));
+
+            thumbnail.classList.add("active");
+          });
+
+          thumbnails.appendChild(thumbnail);
+        });
+      } else {
+        imageWrap.textContent = "لا توجد صورة لهذا المنتج";
+        thumbnails.classList.add("hidden");
       }
 
-      thumbnail.addEventListener("click", () => {
-        mainImage.src = imageUrl;
+      if (isAdmin) {
+        const adminActions = document.createElement("div");
+        adminActions.className = "row";
+        adminActions.style.marginTop = "15px";
 
-        thumbnails.querySelectorAll(".detail-thumbnail")
-          .forEach(item => item.classList.remove("active"));
+        const editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "btn";
+        editBtn.textContent = "تعديل المنتج";
+        editBtn.onclick = () => startProductEdit(product);
 
-        thumbnail.classList.add("active");
-      });
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.className = "btn btn-danger";
+        deleteBtn.textContent = "حذف المنتج";
+        deleteBtn.onclick = () => deleteProduct(product);
 
-      thumbnails.appendChild(thumbnail);
-    });
-  } else {
-    imageWrap.textContent = "لا توجد صورة لهذا المنتج";
-    thumbnails.classList.add("hidden");
-  }
-
-  if (isAdmin) {
-    const adminActions = document.createElement("div");
-    adminActions.className = "row";
-    adminActions.style.marginTop = "15px";
-
-    const editBtn = document.createElement("button");
-    editBtn.type = "button";
-    editBtn.className = "btn";
-    editBtn.textContent = "تعديل المنتج";
-    editBtn.onclick = () => startProductEdit(product);
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "btn btn-danger";
-    deleteBtn.textContent = "حذف المنتج";
-    deleteBtn.onclick = () => deleteProduct(product);
-
-    adminActions.append(editBtn, deleteBtn);
-    detail.appendChild(adminActions);
-  }
-}  
+        adminActions.append(editBtn, deleteBtn);
+        detail.appendChild(adminActions);
+      }
+    }  
   
     function closeProductDetail() {  
       currentDetailProductId = null;  
@@ -1201,123 +1206,123 @@ if (productImage) {
     }  
   
     $("productForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!requireAdmin()) return;
+      event.preventDefault();
+      if (!requireAdmin()) return;
 
-  const name = $("productName").value.trim();
-  const price = Number($("productPrice").value);
-  const categoryId = $("productCategory").value;
-  const description = $("productDescription").value.trim();
-  const colors = $("productColors").value.trim();
-  const sizes = $("productSizes").value.trim();
-  const imageFiles = Array.from($("productImage").files);
+      const name = $("productName").value.trim();
+      const price = Number($("productPrice").value);
+      const categoryId = $("productCategory").value;
+      const description = $("productDescription").value.trim();
+      const colors = $("productColors").value.trim();
+      const sizes = $("productSizes").value.trim();
+      const imageFiles = Array.from($("productImage").files);
 
-  if (!name || !categoryId || !Number.isFinite(price) || price < 0) {
-    showStatus("productStatus", "راجع اسم المنتج والسعر والقسم.", true);
-    return;
-  }
-
-  const saveButton = $("saveProductBtn");
-  saveButton.disabled = true;
-  saveButton.textContent = "جارٍ الحفظ...";
-
-  try {
-    let imageUrls = [];
-
-    const existing = editingProductId !== null
-      ? products.find(
-          item => String(item.id) === String(editingProductId)
-        )
-      : null;
-
-    // الاحتفاظ بالصور القديمة
-    if (existing) {
-      imageUrls = existing.images?.length
-        ? [...existing.images]
-        : (existing.image_url ? [existing.image_url] : []);
-    }
-
-    // رفع الصور الجديدة
-    for (const imageFile of imageFiles) {
-      if (!imageFile.type.startsWith("image/")) {
-        throw new Error("أحد الملفات المختارة ليس صورة.");
+      if (!name || !categoryId || !Number.isFinite(price) || price < 0) {
+        showStatus("productStatus", "راجع اسم المنتج والسعر والقسم.", true);
+        return;
       }
 
-      const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-      const filePath =
-        Date.now() + "_" +
-        Math.random().toString(36).slice(2) + "_" +
-        safeName;
+      const saveButton = $("saveProductBtn");
+      saveButton.disabled = true;
+      saveButton.textContent = "جارٍ الحفظ...";
 
-      const { error: uploadError } = await supabaseClient
-        .storage
-        .from("product-images")
-        .upload(filePath, imageFile, {
-          cacheControl: "3600",
-          upsert: false
-        });
+      try {
+        let imageUrls = [];
 
-      if (uploadError) throw uploadError;
+        const existing = editingProductId !== null
+          ? products.find(
+              item => String(item.id) === String(editingProductId)
+            )
+          : null;
 
-      const { data: publicData } = supabaseClient
-        .storage
-        .from("product-images")
-        .getPublicUrl(filePath);
+        // الاحتفاظ بالصور القديمة
+        if (existing) {
+          imageUrls = existing.images?.length
+            ? [...existing.images]
+            : (existing.image_url ? [existing.image_url] : []);
+        }
 
-      imageUrls.push(publicData.publicUrl);
-    }
+        // رفع الصور الجديدة
+        for (const imageFile of imageFiles) {
+          if (!imageFile.type.startsWith("image/")) {
+            throw new Error("أحد الملفات المختارة ليس صورة.");
+          }
 
-    const productData = {
-      name,
-      price,
-      category_id: categoryId,
-      description,
-      colors,
-      sizes,
-      image_url: imageUrls[0] || null,
-      images: imageUrls
-    };
+          const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+          const filePath =
+            Date.now() + "_" +
+            Math.random().toString(36).slice(2) + "_" +
+            safeName;
 
-    let result;
+          const { error: uploadError } = await supabaseClient
+            .storage
+            .from("product-images")
+            .upload(filePath, imageFile, {
+              cacheControl: "3600",
+              upsert: false
+            });
 
-    if (editingProductId !== null) {
-      result = await supabaseClient
-        .from("products")
-        .update(productData)
-        .eq("id", editingProductId);
-    } else {
-      result = await supabaseClient
-        .from("products")
-        .insert(productData);
-    }
+          if (uploadError) throw uploadError;
 
-    if (result.error) throw result.error;
+          const { data: publicData } = supabaseClient
+            .storage
+            .from("product-images")
+            .getPublicUrl(filePath);
 
-    showStatus(
-      "productStatus",
-      editingProductId !== null
-        ? "تم تعديل المنتج بنجاح."
-        : "تمت إضافة المنتج بنجاح."
-    );
+          imageUrls.push(publicData.publicUrl);
+        }
 
-    resetProductForm();
-    await loadProducts();
+        const productData = {
+          name,
+          price,
+          category_id: categoryId,
+          description,
+          colors,
+          sizes,
+          image_url: imageUrls[0] || null,
+          images: imageUrls
+        };
 
-  } catch (error) {
-    let message = error.message || "خطأ غير معروف";
+        let result;
 
-    if (/colors|sizes|column/i.test(message)) {
-      message +=
-        " — تأكد من إضافة حقلي colors وsizes في جدول products من Supabase.";
-    }
+        if (editingProductId !== null) {
+          result = await supabaseClient
+            .from("products")
+            .update(productData)
+            .eq("id", editingProductId);
+        } else {
+          result = await supabaseClient
+            .from("products")
+            .insert(productData);
+        }
 
-    showStatus("productStatus", "تعذر حفظ المنتج: " + message, true);
+        if (result.error) throw result.error;
 
-  } finally {
-    saveButton.disabled = false;
-    saveButton.textContent = "حفظ المنتج";
-  }
-});  
+        showStatus(
+          "productStatus",
+          editingProductId !== null
+            ? "تم تعديل المنتج بنجاح."
+            : "تمت إضافة المنتج بنجاح."
+        );
+
+        resetProductForm();
+        await loadProducts();
+
+      } catch (error) {
+        let message = error.message || "خطأ غير معروف";
+
+        if (/colors|sizes|column/i.test(message)) {
+          message +=
+            " — تأكد من إضافة حقلي colors وsizes في جدول products من Supabase.";
+        }
+
+        showStatus("productStatus", "تعذر حفظ المنتج: " + message, true);
+
+      } finally {
+        saveButton.disabled = false;
+        saveButton.textContent = "حفظ المنتج";
+      }
+    });  
   
     function startProductEdit(product) {  
       if (!requireAdmin()) return;  
@@ -1410,7 +1415,6 @@ if (productImage) {
       }  
     }  
   
- 
     initializeApp();
   </script>
 
@@ -1477,7 +1481,7 @@ if (productImage) {
   <script>
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./sw.js").catch(function (error) {
+      navigator.serviceWorker.register("/rodim-libya/sw.js?v=5", { scope: "/rodim-libya/" }).catch(function (error) {
         console.error("فشل تسجيل التطبيق:", error);
       });
     });
@@ -1486,4 +1490,3 @@ if (productImage) {
 
 </body>
 </html>
-   
