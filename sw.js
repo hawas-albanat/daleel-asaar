@@ -1,5 +1,4 @@
-
-const CACHE_NAME = "hawas-albanat-v5";
+const CACHE_NAME = "rodim-libya-v1";
 
 const CORE = [
   "./",
