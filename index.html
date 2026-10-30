@@ -1124,108 +1124,124 @@
       }  
     }  
   
-    $("productForm").addEventListener("submit", async event => {  
-      event.preventDefault();  
-      if (!requireAdmin()) return;  
-  
-      const name = $("productName").value.trim();  
-      const price = Number($("productPrice").value);  
-      const categoryId = $("productCategory").value;  
-      const description = $("productDescription").value.trim();  
-      const colors = $("productColors").value.trim();  
-      const sizes = $("productSizes").value.trim();  
-      const imageFiles = Array.from($("productImage").files);  
-  
-      if (!name || !categoryId || !Number.isFinite(price) || price < 0) {  
-        showStatus("productStatus", "راجع اسم المنتج والسعر والقسم.", true);  
-        return;  
-      }  
-  
-      const saveButton = $("saveProductBtn");  
-      saveButton.disabled = true;  
-      saveButton.textContent = "جارٍ الحفظ...";  
-  
-      let imageUrls = [];
+    $("productForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!requireAdmin()) return;
 
-const existing = editingProductId !== null
-  ? products.find(
-      item => String(item.id) === String(editingProductId)
-    )
-  : null;
+  const name = $("productName").value.trim();
+  const price = Number($("productPrice").value);
+  const categoryId = $("productCategory").value;
+  const description = $("productDescription").value.trim();
+  const colors = $("productColors").value.trim();
+  const sizes = $("productSizes").value.trim();
+  const imageFiles = Array.from($("productImage").files);
 
-// الاحتفاظ بالصور القديمة
-if (existing) {
-  imageUrls = existing.images?.length
-    ? [...existing.images]
-    : (existing.image_url ? [existing.image_url] : []);
-}
-
-// رفع كل الصور الجديدة
-for (const imageFile of imageFiles) {
-  if (!imageFile.type.startsWith("image/")) {
-    throw new Error("أحد الملفات المختارة ليس صورة.");
+  if (!name || !categoryId || !Number.isFinite(price) || price < 0) {
+    showStatus("productStatus", "راجع اسم المنتج والسعر والقسم.", true);
+    return;
   }
 
-  const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const filePath =
-    Date.now() + "_" +
-    Math.random().toString(36).slice(2) + "_" +
-    safeName;
+  const saveButton = $("saveProductBtn");
+  saveButton.disabled = true;
+  saveButton.textContent = "جارٍ الحفظ...";
 
-  const { error: uploadError } = await supabaseClient
-    .storage
-    .from("product-images")
-    .upload(filePath, imageFile, {
-      cacheControl: "3600",
-      upsert: false
-    });
+  try {
+    let imageUrls = [];
 
-  if (uploadError) throw uploadError;
+    const existing = editingProductId !== null
+      ? products.find(
+          item => String(item.id) === String(editingProductId)
+        )
+      : null;
 
-  const { data: publicData } = supabaseClient
-    .storage
-    .from("product-images")
-    .getPublicUrl(filePath);
+    // الاحتفاظ بالصور القديمة
+    if (existing) {
+      imageUrls = existing.images?.length
+        ? [...existing.images]
+        : (existing.image_url ? [existing.image_url] : []);
+    }
 
-  imageUrls.push(publicData.publicUrl);
-}
+    // رفع الصور الجديدة
+    for (const imageFile of imageFiles) {
+      if (!imageFile.type.startsWith("image/")) {
+        throw new Error("أحد الملفات المختارة ليس صورة.");
+      }
 
-const productData = {
-  name,
-  price,
-  category_id: categoryId,
-  description,
-  colors,
-  sizes,
-  image_url: imageUrls[0] || null,
-  images: imageUrls
-};
-  
-        if (result.error) throw result.error;  
-  
-        showStatus(  
-          "productStatus",  
-          editingProductId !== null  
-            ? "تم تعديل المنتج بنجاح."  
-            : "تمت إضافة المنتج بنجاح."  
-        );  
-  
-        resetProductForm();  
-        await loadProducts();  
-      } catch (error) {  
-        let message = error.message || "خطأ غير معروف";  
-  
-        if (/colors|sizes|column/i.test(message)) {  
-          message +=  
-            " — تأكد من إضافة حقلي colors وsizes في جدول products من Supabase.";  
-        }  
-  
-        showStatus("productStatus", "تعذر حفظ المنتج: " + message, true);  
-      } finally {  
-        saveButton.disabled = false;  
-        saveButton.textContent = "حفظ المنتج";  
-      }  
-    });  
+      const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const filePath =
+        Date.now() + "_" +
+        Math.random().toString(36).slice(2) + "_" +
+        safeName;
+
+      const { error: uploadError } = await supabaseClient
+        .storage
+        .from("product-images")
+        .upload(filePath, imageFile, {
+          cacheControl: "3600",
+          upsert: false
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicData } = supabaseClient
+        .storage
+        .from("product-images")
+        .getPublicUrl(filePath);
+
+      imageUrls.push(publicData.publicUrl);
+    }
+
+    const productData = {
+      name,
+      price,
+      category_id: categoryId,
+      description,
+      colors,
+      sizes,
+      image_url: imageUrls[0] || null,
+      images: imageUrls
+    };
+
+    let result;
+
+    if (editingProductId !== null) {
+      result = await supabaseClient
+        .from("products")
+        .update(productData)
+        .eq("id", editingProductId);
+    } else {
+      result = await supabaseClient
+        .from("products")
+        .insert(productData);
+    }
+
+    if (result.error) throw result.error;
+
+    showStatus(
+      "productStatus",
+      editingProductId !== null
+        ? "تم تعديل المنتج بنجاح."
+        : "تمت إضافة المنتج بنجاح."
+    );
+
+    resetProductForm();
+    await loadProducts();
+
+  } catch (error) {
+    let message = error.message || "خطأ غير معروف";
+
+    if (/colors|sizes|column/i.test(message)) {
+      message +=
+        " — تأكد من إضافة حقلي colors وsizes في جدول products من Supabase.";
+    }
+
+    showStatus("productStatus", "تعذر حفظ المنتج: " + message, true);
+
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = "حفظ المنتج";
+  }
+});  
   
     function startProductEdit(product) {  
       if (!requireAdmin()) return;  
