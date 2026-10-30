@@ -1145,64 +1145,61 @@
       saveButton.disabled = true;  
       saveButton.textContent = "جارٍ الحفظ...";  
   
-      try {  
-        let imageUrl = null;  
-  
-        if (editingProductId !== null) {  
-          const existing = products.find(  
-            item => String(item.id) === String(editingProductId)  
-          );  
-          imageUrl = existing?.image_url || null;  
-        }  
-  
-        if (imageFile) {  
-          if (!imageFile.type.startsWith("image/")) {  
-            throw new Error("الملف المختار ليس صورة.");  
-          }  
-  
-          const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");  
-          const filePath = Date.now() + "_" + safeName;  
-  
-          const { error: uploadError } = await supabaseClient  
-            .storage  
-            .from("product-images")  
-            .upload(filePath, imageFile, {  
-              cacheControl: "3600",  
-              upsert: false  
-            });  
-  
-          if (uploadError) throw uploadError;  
-  
-          const { data: publicData } = supabaseClient  
-            .storage  
-            .from("product-images")  
-            .getPublicUrl(filePath);  
-  
-          imageUrl = publicData.publicUrl;  
-        }  
-  
-        const productData = {  
-          name,  
-          price,  
-          category_id: categoryId,  
-          description,  
-          colors,  
-          sizes,  
-          image_url: imageUrl  
-        };  
-  
-        let result;  
-  
-        if (editingProductId !== null) {  
-          result = await supabaseClient  
-            .from("products")  
-            .update(productData)  
-            .eq("id", editingProductId);  
-        } else {  
-          result = await supabaseClient  
-            .from("products")  
-            .insert(productData);  
-        }  
+      let imageUrls = [];
+
+const existing = editingProductId !== null
+  ? products.find(
+      item => String(item.id) === String(editingProductId)
+    )
+  : null;
+
+// الاحتفاظ بالصور القديمة
+if (existing) {
+  imageUrls = existing.images?.length
+    ? [...existing.images]
+    : (existing.image_url ? [existing.image_url] : []);
+}
+
+// رفع كل الصور الجديدة
+for (const imageFile of imageFiles) {
+  if (!imageFile.type.startsWith("image/")) {
+    throw new Error("أحد الملفات المختارة ليس صورة.");
+  }
+
+  const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const filePath =
+    Date.now() + "_" +
+    Math.random().toString(36).slice(2) + "_" +
+    safeName;
+
+  const { error: uploadError } = await supabaseClient
+    .storage
+    .from("product-images")
+    .upload(filePath, imageFile, {
+      cacheControl: "3600",
+      upsert: false
+    });
+
+  if (uploadError) throw uploadError;
+
+  const { data: publicData } = supabaseClient
+    .storage
+    .from("product-images")
+    .getPublicUrl(filePath);
+
+  imageUrls.push(publicData.publicUrl);
+}
+
+const productData = {
+  name,
+  price,
+  category_id: categoryId,
+  description,
+  colors,
+  sizes,
+  image_url: imageUrls[0] || null,
+  images: imageUrls
+};
   
         if (result.error) throw result.error;  
   
