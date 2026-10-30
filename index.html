@@ -786,20 +786,20 @@
         const imageWrap = document.createElement("div");  
         imageWrap.className = "product-image-wrap";  
   
-        if (product.image_url) {  
-          const image = document.createElement("img");  
-          image.className = "product-image";  
-          image.src = product.image_url;  
-          image.alt = product.name || "صورة المنتج";  
-          image.loading = "lazy";  
-          image.onerror = () => {  
-            image.style.display = "none";  
-            imageWrap.textContent = "تعذر تحميل الصورة";  
-          };  
-          imageWrap.appendChild(image);  
-        } else {  
-          imageWrap.textContent = "لا توجد صورة";  
-        }  
+        if (product.image_url) {
+    const image = document.createElement("img");
+    image.className = "product-image";
+    image.src = product.image_url;
+    image.alt = product.name;
+    image.loading = "lazy";
+    image.onerror = () => {
+      image.style.display = "none";
+      imageWrap.textContent = "تعذر تحميل الصورة";
+    };
+    imageWrap.appendChild(image);
+} else {
+    imageWrap.textContent = "لا توجد صورة";
+}
   
         const info = document.createElement("div");  
         info.className = "product-info";  
