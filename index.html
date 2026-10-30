@@ -465,7 +465,7 @@
     </div>  
 
     <div class="field">  
-      <label for="productPrice">السعر بالجنيه</label>  
+      <label for="productPrice">السعر بالدينار</label>  
       <input id="productPrice" type="number" min="0" step="0.01"  
              required placeholder="السعر">  
     </div>  
@@ -495,11 +495,13 @@
       <small>اكتب المقاسات وافصل بينها بفاصلة.</small>  
     </div>  
 
-    <div class="field">  
-      <label for="productImage">صورة المنتج</label>  
-      <input id="productImage" type="file" accept="image/*">  
-      <small id="imageHelp">اختَر صورة واضحة للمنتج.</small>  
-    </div>  
+    <div class="field">
+  <label for="productImage">صور المنتج</label>
+  <input id="productImage" type="file" accept="image/*" multiple>
+  <small id="imageHelp">
+    يمكنك اختيار عدة صور للمنتج مرة واحدة.
+  </small>
+</div>
 
     <button id="saveProductBtn" class="btn" type="submit">  
       حفظ المنتج  
