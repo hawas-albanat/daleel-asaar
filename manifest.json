@@ -1,21 +1,21 @@
 {
-  "id": "/rodim-libya-store",
+  "id": "/rodim-libya/",
   "name": "متجر روديم ليبيا",
   "short_name": "روديم",
-  "start_url": "./index.html?app=rodim",
-  "scope": "./",
+  "start_url": "/rodim-libya/",
+  "scope": "/rodim-libya/",
   "display": "standalone",
   "background_color": "#f3f7f3",
   "theme_color": "#E91E63",
   "icons": [
     {
-      "src": "./rodim-icon-512-3.png",
+      "src": "/rodim-libya/rodim-icon-512-3.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./rodim-icon-512-3.png",
+      "src": "/rodim-libya/rodim-icon-512-3.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
