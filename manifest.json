@@ -1,7 +1,7 @@
-
 {
+  "id": "./rodim-app",
   "name": "متجر روديم ليبيا",
-  "short_name": "متجر روديم",
+  "short_name": "روديم",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
