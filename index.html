@@ -1134,7 +1134,7 @@
       const description = $("productDescription").value.trim();  
       const colors = $("productColors").value.trim();  
       const sizes = $("productSizes").value.trim();  
-      const imageFile = $("productImage").files[0];  
+      const imageFiles = Array.from($("productImage").files);  
   
       if (!name || !categoryId || !Number.isFinite(price) || price < 0) {  
         showStatus("productStatus", "راجع اسم المنتج والسعر والقسم.", true);  
